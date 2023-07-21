@@ -1,0 +1,1351 @@
+{
+	"info": {
+		"_postman_id": "0cc592f8-b1a4-4ba7-aea5-31c4d75ac40d",
+		"name": "Baileys Rest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18389124"
+	},
+	"item": [
+		{
+			"name": "SESSION",
+			"item": [
+				{
+					"name": "Create Session With QrCode",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sessionId\": \"{{SESSION_ID}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/sessions/add",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"sessions",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Session With Pairing Code",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"sessionId\": \"{{SESSION_ID}}\",\r\n    \"phone\": \"{{PHONE}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/sessions/code",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"sessions",
+								"code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Session",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/sessions/:sessionId",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"sessions",
+								":sessionId"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Session Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/sessions/:sessionId/status",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"sessions",
+								":sessionId",
+								"status"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MESSAGES",
+			"item": [
+				{
+					"name": "Send Text",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"LAST_MESSAGE_ID\", data.key.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": \"{{PHONE}}\",\r\n    \"message\": {\r\n        \"text\": \"Ping\" \r\n    },\r\n    \"delay\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/messages/send",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"messages",
+								"send"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Location",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"LAST_MESSAGE_ID\", data.key.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": \"{{PHONE}}\",\r\n    \"message\": {\r\n        \"location\": {\r\n            \"degreesLatitude\": -19.746994663650955,\r\n            \"degreesLongitude\": -47.94159018007979\r\n        }\r\n    },\r\n    \"delay\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/messages/send",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"messages",
+								"send"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"LAST_MESSAGE_ID\", data.key.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"number\": \"{{PHONE}}\",\r\n    \"message\": {\r\n        \"contact\": {\r\n            \"name\": \"José Orlando\",\r\n            \"number\": \"5534999686982\"\r\n        }\r\n    },\r\n    \"delay\": 6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/messages/send",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"messages",
+								"send"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Options",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"LAST_MESSAGE_ID\", data.key.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"number\": \"{{PHONE}}\",\r\n    \"message\": {\r\n        \"text\": \"Em qual setor você deseja falar?\",\r\n        \"options\" : [\r\n            \"Marketing\",\r\n            \"Desenvolvimento\",\r\n            \"Financeiro\"\r\n        ]\r\n    },\r\n    \"delay\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/messages/send",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"messages",
+								"send"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send presence",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jid\": \"{{JID}}\",\r\n    \"presence\": \"recording\"\r\n   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/messages/presence",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"messages",
+								"presence"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update text",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": \"{{PHONE}}\",\r\n    \"message\": {\r\n        \"id\": \"{{LAST_MESSAGE_ID}}\",\r\n        \"text\": \"Pong\"\r\n    },\r\n    \"delay\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/messages/update",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"messages",
+								"update"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Message",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": \"{{PHONE}}\",\r\n    \"message\": {\r\n        \"id\": \"{{LAST_MESSAGE_ID}}\"\r\n    }\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/messages/delete",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"messages",
+								"delete"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "JOSE_1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Image",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"LAST_MESSAGE_ID\", data.key.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": \"{{PHONE}}\",\r\n    \"message\": {\r\n        \"image\": {\r\n            \"url\" : \"https://www.akc.org/wp-content/uploads/2017/11/Australian-Cattle-Dog-laying-down-in-the-grass.jpg\"   \r\n        },\r\n        \"caption\": \"Legenda da imagem vai aqui. Pode ser null ou vazio também\"\r\n    },\r\n    \"delay\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/messages/send",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"messages",
+								"send"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Audio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"LAST_MESSAGE_ID\", data.key.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": \"{{PHONE}}\",\r\n    \"message\": {\r\n        \"audio\": {\r\n            \"url\" : \"http://localhost:3333/static/audio/2F49EE65082AB66116EBFC03DC26C44D.ogg?sessionId=JOSE_1&messageId=2F49EE65082AB66116EBFC03DC26C44D\"\r\n        }\r\n    },\r\n    \"delay\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/messages/send",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"messages",
+								"send"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Document",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"LAST_MESSAGE_ID\", data.key.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": \"{{PHONE}}\",\r\n    \"message\": {\r\n        \"document\": {\r\n            \"url\" : \"https://implements.logzz.com.br/privacidade.pdf\"\r\n        },\r\n        \"mimetype\": \"application/pdf\",\r\n        \"fileName\": \"nome-do-arquivo.pdf\",\r\n        \"caption\": \"Legenda aqui\"\r\n    },\r\n    \"delay\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/messages/send",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"messages",
+								"send"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Video",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"LAST_MESSAGE_ID\", data.key.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": \"{{PHONE}}\",\r\n    \"message\": {\r\n        \"video\": {\r\n            \"url\" : \"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4\"\r\n        }\r\n    },\r\n    \"delay\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/messages/send",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"messages",
+								"send"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PROFILE",
+			"item": [
+				{
+					"name": "Get WhatsApp Contact (DEPRECATED)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/contacts/:jid",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"contacts",
+								":jid"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								},
+								{
+									"key": "jid",
+									"value": "{{JID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Jid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/profile/:number",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"profile",
+								":number"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								},
+								{
+									"key": "number",
+									"value": "{{PHONE}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile Picture",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/profile/:number/picture",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"profile",
+								":number",
+								"picture"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								},
+								{
+									"key": "number",
+									"value": "{{PHONE}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile Picture",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jid\": \"CAREFULL_HERE_IT_WILL_CHANGE_THE_PROFILE_PICTURE_SO_THREAD_LIGHTLY\",\r\n    \"url\" : \"https://hips.hearstapps.com/hmg-prod/images/funny-dog-captions-1563456605.jpg?crop=1xw:0.7548888036809815xh;center,top&resize=1200:*\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/profile/picture",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"profile",
+								"picture"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GROUPS",
+			"item": [
+				{
+					"name": "Create group",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subject\": \"TESTE 2\",\r\n    \"participants\" : [\r\n        \"5534999686982\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/groups",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"groups"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Participants",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jid\": \"120363164400034444@g.us\",\r\n    \"participants\": [\r\n        \"553499477415\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/groups/participants",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"groups",
+								"participants"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Participants",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jid\": \"120363164400034444@g.us\",\r\n    \"participants\": [\r\n        \"553499477415\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/groups/participants",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"groups",
+								"participants"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Invite Link",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/groups/:jid/invite",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"groups",
+								":jid",
+								"invite"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								},
+								{
+									"key": "jid",
+									"value": "GROUP_JID"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Groups",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/groups",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"groups"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Group Subject",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"jid\": \"GROUP_JID\",\r\n     \"subject\": \"GROUP_NEW_NAME\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/groups/subject",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"groups",
+								"subject"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Group Description",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"jid\": \"GROUP_JID\",\r\n     \"description\": \"GROUP_DESCRIPTION\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/groups/description",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"groups",
+								"description"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Group Info",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/groups/:jid",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"groups",
+								":jid"
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}"
+								},
+								{
+									"key": "jid",
+									"value": "GROUP_JID"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CHATS",
+			"item": [
+				{
+					"name": "Load Conversation",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "secret",
+								"value": "$2a$12$VruN7Mf0FsXW2mR8WV0gTO134CQ54AmeCR.ml3wgc9guPSyKtHMgC",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/:sessionId/chats/:jid?page=1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								":sessionId",
+								"chats",
+								":jid"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "sessionId",
+									"value": "{{SESSION_ID}}",
+									"description": "Session id"
+								},
+								{
+									"key": "jid",
+									"value": "120363027770013261@g.us",
+									"description": "Chat jid"
+								}
+							]
+						},
+						"description": "Load a conversation with someone or a group"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:3333",
+			"type": "string"
+		},
+		{
+			"key": "JID",
+			"value": "553499686982@s.whatsapp.net",
+			"type": "string"
+		},
+		{
+			"key": "SESSION_ID",
+			"value": "JOSE_1",
+			"type": "string"
+		},
+		{
+			"key": "LAST_MESSAGE_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "BACKEND_URL",
+			"value": "https://backend.atendezap.digital",
+			"type": "string"
+		},
+		{
+			"key": "PHONE",
+			"value": "553499686982",
+			"type": "string"
+		},
+		{
+			"key": "LAST_CREATED_GROUP_ID",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
