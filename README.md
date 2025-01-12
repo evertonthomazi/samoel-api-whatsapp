@@ -26,11 +26,11 @@ Implementação da [@whiskeysockets/baileys](https://github.com/whiskeysockets/b
 
 - yarn install
 - yarn build
-- mkdir media/audio
-- mkdir media/document
-- mkdir media/image
-- mkdir media/video
-- mkdir media/sticker
+mkdir media/audio
+mkdir media/document
+mkdir media/image
+mkdir media/video
+mkdir media/sticker
 
 
 # Configurações do `.env`
@@ -63,8 +63,3 @@ STATIC_URL="http://localhost:3000/static"
 
 //delay máximo que a api fica "digitando..." ou "gravando áudio..."
 MAX_DELAY=14
-
-
-
-
-
